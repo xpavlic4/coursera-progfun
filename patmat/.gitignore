@@ -75,3 +75,10 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 
+.idea/.name
+.idea/inspectionProfiles/
+.idea/modules.xml
+.idea/modules/
+.idea/sbt.xml
+.idea/scala_compiler.xml
+project/project/
