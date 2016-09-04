@@ -110,5 +110,20 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("for all") {
+    new TestSets {
+      val s12 = union(s1, s2)
+      val s123 = union(s12, s3)
+      forall(s123, x => x > 0)
+    }
+  }
+
+  test("exists {1,3,4,5,7,1000}") {
+    new TestSets {
+      val s12 = union(s1, s2)
+      val s123 = union(s12, s3)
+      assert(exists(s123, x => x == 3) === true)
+    }
+  }
 
 }
