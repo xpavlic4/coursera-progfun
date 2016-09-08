@@ -79,7 +79,7 @@ object Huffman {
    */
     def times(chars: List[Char]): List[(Char, Int)] = {
       val by: Map[Char, String] = chars.toString().groupBy(_.toChar)
-      by.mapValues(_.size).toList
+      by.mapValues(_.length).toList
     }
   
   /**
@@ -89,12 +89,24 @@ object Huffman {
    * head of the list should have the smallest weight), where the weight
    * of a leaf is the frequency of the character.
    */
-    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = ???
+    def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
+      def create(freqs: List[(Char, Int)]): List[Leaf] = {
+        if (freqs.isEmpty)
+          List[Leaf]()
+        else {
+          Leaf(freqs.head._1, freqs.head._2) :: makeOrderedLeafList(freqs.tail)
+        }
+      }
+
+      val c = create(freqs)
+      c.sortWith((l1: Leaf, l2: Leaf) => l1.weight < l2.weight)
+
+    }
   
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-    def singleton(trees: List[CodeTree]): Boolean = ???
+    def singleton(trees: List[CodeTree]): Boolean = trees.length == 1
   
   /**
    * The parameter `trees` of this function is a list of code trees ordered
