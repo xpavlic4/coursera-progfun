@@ -77,9 +77,7 @@ object Huffman {
     * }
     */
   def times(chars: List[Char]): List[(Char, Int)] = {
-    if (chars.isEmpty) List()
-    else
-      chars.toString().groupBy(_.toChar).mapValues(_.length).toList
+    chars.groupBy(_.toChar).map(a => (a._1, a._2.size)).toList
   }
 
   /**

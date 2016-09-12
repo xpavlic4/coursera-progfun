@@ -57,4 +57,10 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("times of some word") {
+    new TestTrees {
+      assert(times("aaaaabbbbrrrkkd".toList) === List(('a',5), ('b',4), ('r',3), ('k',2), ('d',1)))
+    }
+  }
+
 }
