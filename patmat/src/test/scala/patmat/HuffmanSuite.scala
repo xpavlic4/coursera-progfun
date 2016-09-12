@@ -51,4 +51,10 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("times of nil") {
+    new TestTrees {
+      assert(times(List()).size === 0)
+    }
+  }
+
 }

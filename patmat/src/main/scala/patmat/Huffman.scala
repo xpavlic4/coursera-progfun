@@ -77,8 +77,9 @@ object Huffman {
     * }
     */
   def times(chars: List[Char]): List[(Char, Int)] = {
-    val by: Map[Char, String] = chars.toString().groupBy(_.toChar)
-    by.mapValues(_.length).toList
+    if (chars.isEmpty) List()
+    else
+      chars.toString().groupBy(_.toChar).mapValues(_.length).toList
   }
 
   /**
@@ -246,11 +247,11 @@ object Huffman {
   def convert(tree: CodeTree): CodeTable = {
     def acc(t: CodeTree, a: List[Bit]): CodeTable = {
       t match {
-        case Fork(left,right,_,_) => acc(left,a :+ 0) ::: acc(right,a :+ 1)
-        case Leaf(char,_) => List((char,a))
+        case Fork(left, right, _, _) => acc(left, a :+ 0) ::: acc(right, a :+ 1)
+        case Leaf(char, _) => List((char, a))
       }
     }
-    acc(tree,List())
+    acc(tree, List())
   }
 
   /**
@@ -258,7 +259,7 @@ object Huffman {
     * use it in the `convert` method above, this merge method might also do some transformations
     * on the two parameter code tables.
     */
-  def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = a:::b
+  def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = a ::: b
 
   /**
     * This function encodes `text` according to the code tree `tree`.
