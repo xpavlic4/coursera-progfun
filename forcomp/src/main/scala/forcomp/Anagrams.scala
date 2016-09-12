@@ -27,6 +27,7 @@ object Anagrams {
    */
   val dictionary: List[Word] = loadDictionary
 
+
   /** Converts the word into its character occurrence list.
    *
    *  Note: the uppercase and lowercase version of the character are treated as the
@@ -34,7 +35,10 @@ object Anagrams {
    *
    *  Note: you must use `groupBy` to implement this method!
    */
-  def wordOccurrences(w: Word): Occurrences = ???
+  def wordOccurrences(w: Word): Occurrences = {
+    val l: Occurrences = w.groupBy(_.toLower).mapValues(_.length).toList
+    l.sortBy(_._1)
+  }
 
   /** Converts a sentence into its character occurrence list. */
   def sentenceOccurrences(s: Sentence): Occurrences = ???
