@@ -145,7 +145,7 @@ object Huffman {
     */
   def until(xxx: List[CodeTree] => Boolean, yyy: List[CodeTree] => List[CodeTree])(zzz: List[CodeTree]): List[CodeTree] = {
     if (xxx(zzz)) zzz
-    else until(xxx, yyy)(zzz)
+    else until(xxx, yyy)(yyy(zzz))
   }
 
   /**
@@ -154,10 +154,7 @@ object Huffman {
     * The parameter `chars` is an arbitrary text. This function extracts the character
     * frequencies from that text and creates a code tree based on them.
     */
-  def createCodeTree(chars: List[Char]): CodeTree = {
-    val t = makeOrderedLeafList(times(chars))
-    until(singleton, combine)(t).head
-  }
+  def createCodeTree(chars: List[Char]): CodeTree = until(singleton, combine)(makeOrderedLeafList(times(chars))).head
 
 
   // Part 3: Decoding

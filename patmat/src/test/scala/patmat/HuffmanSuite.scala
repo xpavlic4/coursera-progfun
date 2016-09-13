@@ -63,4 +63,10 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("createCodeTree(sometext)") {
+    new TestTrees {
+      private val createCodeTree1: CodeTree = createCodeTree("someText".toList)
+    }
+  }
+
 }
