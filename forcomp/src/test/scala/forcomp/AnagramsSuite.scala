@@ -53,6 +53,7 @@ class AnagramsSuite extends FunSuite  {
 
   test("combinations: abba") {
     val abba = List(('a', 2), ('b', 2))
+
     val abbacomb = List(
       List(),
       List(('a', 1)),

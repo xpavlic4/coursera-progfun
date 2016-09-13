@@ -58,10 +58,24 @@ object Anagrams {
    *    List(('a', 1), ('e', 1), ('t', 1)) -> Seq("ate", "eat", "tea")
    *
    */
-  lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] = ???
+  lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] = {
+    def acc(l: List[Word], m: Map[Occurrences, List[Word]]): Map[Occurrences, List[Word]] = {
+      if (l.isEmpty) m
+      else {
+        val word: Word = l.head
+        val occurrences: Occurrences = wordOccurrences(word)
+        if (m.contains(occurrences)) {
+          acc(l.tail, m + (occurrences -> (word :: m(occurrences))))
+        } else {
+          acc(l.tail, m + (occurrences -> List(word)))
+        }
+      }
+    }
+    acc(dictionary, Map())
+  }
 
   /** Returns all the anagrams of a given word. */
-  def wordAnagrams(word: Word): List[Word] = ???
+  def wordAnagrams(word: Word): List[Word] = dictionaryByOccurrences(wordOccurrences(word))
 
   /** Returns the list of all subsets of the occurrence list.
    *  This includes the occurrence itself, i.e. `List(('k', 1), ('o', 1))`
@@ -85,7 +99,16 @@ object Anagrams {
    *  Note that the order of the occurrence list subsets does not matter -- the subsets
    *  in the example above could have been displayed in some other order.
    */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    def acc(s: Int, a: List[Occurrences]):List[Occurrences] = {
+      if (s == 0) a
+      else {
+        val p: Iterator[List[Occurrences]] = a.combinations(s)
+        acc(s-1, a.combinations(s) ::: a)
+      }
+    }
+    acc(occurrences.size, List())
+  }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
