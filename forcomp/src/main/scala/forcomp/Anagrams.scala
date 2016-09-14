@@ -100,8 +100,19 @@ object Anagrams {
    *  in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    val map: List[Occurrences] = occurrences.map(a => {for (i<- 0 to a._2) yield (a._1, i)}.toList)
-    map
+    def acc(o1: Occurrences, b: Occurrences, a: List[Occurrences]) : List[Occurrences]  = {
+      if (o1.isEmpty) a :+ b
+      else {
+        val head: (Char, Int) = o1.head
+        var l = List[Occurrences]()
+        for (i <- 1 to head._2) yield {
+          l = l ++ acc(o1.tail, b :+ (head._1, i) , a)
+        }
+        l = l ++ acc(o1.tail, b , a)
+        l
+      }
+    }
+    acc(occurrences, List(), List())
   }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
