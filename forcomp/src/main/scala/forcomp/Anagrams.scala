@@ -180,5 +180,17 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    val sOcc: Occurrences = sentenceOccurrences(sentence)
+
+
+    def acc(o: Occurrences, a: List[Sentence]):  List[Sentence] = {
+      if (o.isEmpty) a else {
+        val l: List[Occurrences] = combinations(o)
+        val occurrences: List[Word] = dictionaryByOccurrences(sOcc)
+      }
+
+    }
+    acc(sOcc, List())
+  }
 }
