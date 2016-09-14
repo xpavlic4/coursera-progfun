@@ -140,6 +140,7 @@ object Anagrams {
     acc(x, List()).reverse
   }
 
+
   /** Returns a list of all anagram sentences of the given sentence.
    *
    *  An anagram of a sentence is formed by taking the occurrences of all the characters of
@@ -182,15 +183,23 @@ object Anagrams {
    */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
     val sOcc: Occurrences = sentenceOccurrences(sentence)
+    val l: List[Occurrences] = combinations(sOcc)
 
-
-    def acc(o: Occurrences, a: List[Sentence]):  List[Sentence] = {
-      if (o.isEmpty) a else {
-        val l: List[Occurrences] = combinations(o)
-        val occurrences: List[Word] = dictionaryByOccurrences(sOcc)
+    def acc(remainung: Occurrences, poss: List[Occurrences],tmp: List[Word], a: List[Sentence]):  List[Sentence] = {
+      if (remainung.isEmpty) a else {
+        val head: Occurrences = poss.head
+        val occurrences: List[Word] = dictionaryByOccurrences(head)
+        var l = List[Sentence]()
+        for (i <- occurrences) yield  {
+          val s: Occurrences = subtract(remainung, head)
+          val acc1: List[Sentence] = acc(s, poss.tail,  tmp :+ i, a)
+          l = l ++ acc1
+        }
+        l
       }
 
     }
-    acc(sOcc, List())
+
+    acc(sOcc, l, List(), List(List()))
   }
 }
